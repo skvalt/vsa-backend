@@ -48,9 +48,7 @@ public class SecurityConfig {
                                 "/api/auth/**",
                                 "/api/voice/**",
                                 "/api/nlp/**",
-                                "/api/suggestions",
                                 "/api/suggestions/**",
-                                "/api/products",
                                 "/api/products/**",
                                 "/v3/api-docs/**",
                                 "/swagger-ui/**",
@@ -74,13 +72,10 @@ public class SecurityConfig {
         config.setAllowedOrigins(List.of(
                 "http://localhost:5173",
                 "http://127.0.0.1:5173",
-                "https://vsa-frontend.vercel.app/"
+                "https://vsa-frontend.vercel.app"
         ));
 
-        config.setAllowedMethods(List.of(
-                "GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"
-        ));
-
+        config.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(List.of("Authorization", "Content-Type", "Accept"));
         config.setAllowCredentials(true);
 
