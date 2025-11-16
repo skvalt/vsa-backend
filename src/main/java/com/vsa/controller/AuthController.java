@@ -30,14 +30,25 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<ApiResponse> register(@Valid @RequestBody RegisterRequest req) {
+    public ResponseEntity<?> register(@Valid @RequestBody RegisterRequest req) {
         try {
+            // 1) Create user
             authService.register(req);
-            return ResponseEntity.ok(new ApiResponse(true, "Registration successful"));
+
+            // 2) Auto-login user and return token + profile
+            LoginRequest loginReq = new LoginRequest();
+            loginReq.setUsername(req.getUsername());
+            loginReq.setPassword(req.getPassword());
+
+            AuthResponse resp = authService.login(loginReq);
+
+            return ResponseEntity.ok(resp);
+
         } catch (IllegalArgumentException ex) {
             return ResponseEntity.badRequest().body(new ApiResponse(false, ex.getMessage()));
         }
     }
+
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@Valid @RequestBody LoginRequest req) {
